@@ -1,0 +1,47 @@
+<div class="mt-5 md:col-span-2 md:mt-0 mb-5">
+    <form action="#" method="POST">
+      <input type="hidden" value="detail", name="form_type">
+      {% csrf_token %}
+      <div class="overflow-hidden shadow sm:rounded-md">
+        <div class="bg-white p-2 sm:p-6">
+          <div class="mb-2">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Update your basic detail</h3>
+          </div>
+          <div class="grid grid-cols-6 gap-2">
+            
+            <div class="col-span-6 sm:col-span-4">
+              <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
+              <small>*Reset your password with this email</small>
+              <input type="text" name="email-address" id="email-address" value="{{user.email}}"
+                autocomplete="email" disabled 
+                class="mt-1 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="street-address" class="block text-sm font-medium text-gray-700">Phone</label>
+              <input type="text" name="phone" id="street-address" value="{{user_data.phone}}"
+                autocomplete="street-address"
+                class="mt-1 block rounded-md w-full border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                
+            </div>
+
+            <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+              <label for="region" class="block text-sm font-medium text-gray-700">Alternate number</label>
+              <input type="text" name="alternate_phone" id="region" value="{{user_data.altenate_number}}" autocomplete="address-level1"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+            </div>
+
+          </div>
+        </div>
+        <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+          {% if user_data.phone %}
+          <div class="inline-flex cursor-pointer justify-center rounded-md border border-transparent bg-violet-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Verify phone</div>
+          {% endif %}
+          <button type="submit"
+            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Update</button>
+        </div>
+      </div>
+    </form>
+  </div>

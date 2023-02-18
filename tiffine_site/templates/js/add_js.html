@@ -1,0 +1,48 @@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    // adding to the cart
+function addItem(this){
+      var dish_id = this.id
+      console.log(dish_id)
+      id = {
+        dish_id : dish_id
+      }
+      $.ajax({
+        url : "{% url 'Add_to_dabba' %}",
+        method : 'GET',
+        data : id,
+        dataType : 'json',
+        success : function(data){
+          let message = document.getElementById('alert-message');
+  
+          if(data.status == 204){
+            message.innerHTML = `{% include 'components/alert.html' with type='Removed' message='Removed from cart !' %}`
+          };
+          if (data.status == 200){
+            message.innerHTML = `{% include 'components/alert.html' with type='Added' message='Successfully added to cart !' %}`
+          }
+          if (data.status == 401){
+            let alrt = `
+            <div class="flex w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-md">
+                <div class="flex items-center justify-center w-12 bg-emerald-500">
+                  <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z" />
+                  </svg>
+                </div>
+  
+                <div class="px-4 py-2 -mx-3">
+                    <div class="mx-3">
+                        <span class="font-semibold text-black">Oops . . .</span>
+                        <p class="text-sm text-black-600 ">You are not authenticated ! <a href="#" class="text-blue">Log in here </a></p>
+                        
+                    </div>
+                </div>
+            </div>
+            `
+            message.innerHTML = alrt
+          }
+        }
+      })
+    })
+  
+  </script>

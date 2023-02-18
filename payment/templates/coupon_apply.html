@@ -1,0 +1,52 @@
+<script>
+      function couponApply(){
+    let coupon = document.getElementById('coupon');
+    let message_div = document.getElementById('message-div');
+
+    if (coupon.value == ''){
+      let mess = `<small>Empty coupon code !</small>`
+          message_div.innerHTML = mess
+          reutrn
+    }
+    $.ajax({
+      url : '{% url "apply-coupon" %}',
+      method : 'POST',
+      data : {
+        cart_pk : '{{cart_obj.pk}}',
+        coupon_code : coupon.value,
+        csrfmiddlewaretoken: "{{csrf_token}}"
+      },
+      success: function(data){
+        if (data.status == 200){
+          window.location.reload()
+        } 
+        if (data.status == 404){
+          let mess = `<small>`+data.message+`</small>`
+          message_div.innerHTML = mess
+          coupon.classList.add('border-red-600');
+        }
+        if(data.status == 301){
+          let mess = `<small>`+data.message+`</small>`
+          message_div.innerHTML = mess
+        }
+      }
+    })
+  }
+
+function removeCoupon(){
+  $.ajax({
+    url : '{% url "remove-coupon" %}',
+    method : 'POST',
+    data : {
+      cart_pk : '{{cart_obj.pk}}',
+      csrfmiddlewaretoken: "{{csrf_token}}"
+    },
+    success: function(data){
+      console.log(data)
+      if (data.status == 200){
+        window.location.reload()
+      }
+    }
+    })
+  }
+</script>

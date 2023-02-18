@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %} Login here {% endblock title %}
+{% load socialaccount %}
+{% block content %}
+{% load static %}
+
+<!-- CSS only -->
+
+<section class="bg-gray-50 ">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+        <a href="{% url 'menu' %}" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 ">
+            <!-- <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"> -->
+              <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 mr-3 sm:h-9" alt="Flowbite Logo" /> -->
+              <span class="self-center text-xl font-semibold whitespace-nowrap text-orange-500 font-bold">Foodie zen</span>
+        </a>
+        <div class="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
+                    Login with 
+                </h1>
+                <button onclick="window.location.href=`{% provider_login_url 'google' %}`"
+                    class="flex items-center justify-center w-full px-4 py-2 text-sm font-bold text-gray-700 border  rounded-lg hover:shadow-md hover:shadow-blue-100 focus:border-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        class="w-4 h-4 mr-2" viewBox="0 0 48 48">
+                        <defs>
+                            <path id="a"
+                                d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z" />
+                        </defs>
+                        <clipPath id="b">
+                            <use xlink:href="#a" overflow="visible" />
+                        </clipPath>
+                        <path clip-path="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z" />
+                        <path clip-path="url(#b)" fill="#EA4335" d="M0 11l17 13 7-6.1L48 14V0H0z" />
+                        <path clip-path="url(#b)" fill="#34A853" d="M0 37l30-23 7.9 1L48 0v48H0z" />
+                        <path clip-path="url(#b)" fill="#4285F4" d="M48 48L17 24l-4-3 35-10z" />
+                    </svg>Google
+                </button>
+                <div class="inline-flex items-center justify-center w-full">
+                    <hr class="w-64 h-px  bg-gray-200 border-0">
+                    <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2">or</span>
+                </div>
+                <form class="space-y-4 md:space-y-6" method="post">
+                    {% csrf_token%}
+                    <div>
+                        <label for="username" class="block mb-2 text-sm font-medium text-gray-900 ">Username</label>
+                        <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="name@company.com" required="">
+                    </div>
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
+                        <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="">
+                    </div>
+        
+                    <p class="text-sm font-light text-gray-500 -400">
+                        Want to <a href="{% url 'password_reset' %}" class="font-medium text-blue-600 hover:underline -500">reset your password</a>
+                    </p>
+                    <button type="submit" class="w-full text-white mt-0 bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded  px-5 py-2.5 text-center shadow-md hover:shadow-blue-500 ">Login</button>
+                    {% for message in messages %}
+                        <p class=" rounded text-blue-600 py-1 px-2 bg-blue-200">{{message}}</p>
+                    {% endfor %}
+                    <p class="text-sm font-light text-gray-500 -400">
+                        Don't have an account? <a href="{% url 'register' %}" class="font-medium text-blue-600 hover:underline -500">Create here</a>
+                    </p>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+  </section>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.lordicon.com/lusqsztk.js"></script>
+{% endblock %}

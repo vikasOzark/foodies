@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %} Register here {% endblock title %}
+{% block bottom %}
+fixed-bottom
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md  mt-5 shadow-blue-100">
+    <h2 class="text-lg font-semibold text-gray-700 capitalize Account settings"></h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="grid lg:grid-cols-3 gap-2 mt-4 sm:grid-cols-2 md:grid-cols-3">
+            <div>
+                <label class="text-gray-700 " for="first_name">First name</label>
+                <input name="first_name" id="first_name" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md    focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring">
+            </div>
+
+            <div>
+                <label class="text-gray-700 " for="last_name">Last name</label>
+                <input name="last_name" id="last_name" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md    focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring">
+            </div>
+
+            <div>
+                <label class="text-gray-700 " for="username">Username</label>
+                <input name="username" id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md    focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring">
+            </div>
+            
+            <div>
+                <label class="text-gray-700 " for="emailAddress">Email Address</label>
+                <input name="email" id="emailAddress" type="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md    focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring">
+            </div>
+
+            <div>
+                <label class="text-gray-700 " for="password">Password</label>
+                <input name="password" id="password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md    focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring">
+            </div>
+
+            <div>
+                <label class="text-gray-700 " for="passwordConfirmation">Password Confirmation</label>
+                <input name="password2" id="passwordConfirmation" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md    focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring">
+            </div>
+        </div>
+
+        <div class="flex justify-end mt-6">
+            <button class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-800 shadow hover:shadow-blue-300 focus:outline-none focus:bg-gray-600">Signup</button><p></p>
+            
+        </div>
+        {% for message in messages %}
+                <p class="mt-1 rounded text-blue-600 py-1 px-2 bg-blue-200">{{message}}</p>
+            {% endfor %}
+        <p class="text-sm font-light text-gray-500 -400">
+            Already have an account? <a href="{% url 'login' %}" class="font-medium text-blue-600 hover:underline -500">Login here</a>
+        </p>
+    </form>
+</section>
+<script>
+    let footer = document.getElementById('footer');
+    footer.style.display = "none";
+</script>
+{% endblock %}

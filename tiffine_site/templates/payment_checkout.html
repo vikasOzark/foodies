@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+{% block title %} Foodie GEN | cart {% endblock title %}
+{% block cart%}text-red-600{%endblock %}
+{% load static %}
+
+{% block content %}
+<style>
+    :root {
+        --gutter: 20px;
+    }
+
+    .app {
+        padding: var(--gutter) 0;
+        display: grid;
+        grid-gap: var(--gutter) 0;
+        grid-template-columns: var(--gutter) 1fr var(--gutter);
+        align-content: start;
+    }
+
+    .app>* {
+        grid-column: 2 / -2;
+    }
+
+    .app>.full {
+        grid-column: 1 / -1;
+    }
+
+    .hs {
+        display: grid;
+        grid-gap: calc(var(--gutter) / 2);
+        grid-template-columns: 10px;
+        grid-template-rows: minmax(150px, 1fr);
+        grid-auto-flow: column;
+        grid-auto-columns: calc(50% - var(--gutter) * 2);
+
+        overflow-x: scroll;
+        scroll-snap-type: x proximity;
+        padding-bottom: calc(.75 * var(--gutter));
+        margin-bottom: calc(-.25 * var(--gutter));
+    }
+
+    .hs:before,
+    .hs:after {
+        content: '';
+        width: 10px;
+    }
+
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+
+    /* .app {
+        overflow-x: scroll;
+    } */
+
+    .hs>li,
+    .item {
+        scroll-snap-align: center;
+        padding: calc(var(--gutter) / 2 * 1.5);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* background: rgb(0, 177, 197); */
+        border-radius: 8px;
+    }
+
+    .no-scrollbar {
+        scrollbar-width: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+<div class="container lg:max-w-screen-lg mx-auto px-2 mb-5">
+    <h2 class="text-bold text-2xl text-gray-400 font-bold">My food cart</h2>
+    <div class="mt-5">
+        <div class="grid md:grid-cols-3 sm:grid-cols-1 ls:grid-cols-2 gap-4">
+            <div class=" md:col-span-2 lg:md:col-span-2 ms:col-span-1p-2">
+
+                <div class=" p-2 ">
+                    {% for item in items %}
+                    <div class="flex items-center p-2 justify-between bg-white rounded-md border-b shadow-md relative">
+                        <div class="flex"> <!-- product -->
+                            <div class="w-20 rounded">
+                                <img class="h-15 rounded" src="{{item.food.image.url}}" alt="">
+                            </div>
+                            
+                            <div class="flex flex-col justify-center ml-4 flex-grow">
+                                <span class="font-bold text-sm">{{item.food.name}} | {{item.food.type_of}}</span>
+                                <span class="text-gray-500 text-xs">{{item.food.deatil|truncatechars:25}} <i data-tooltip-target="tooltip-light" data-tooltip-style="light" class="bi bi-info-circle cursor-pointer"></i></span>
+                                <div id="tooltip-light" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+                                    {{item.food.deatil}}
+                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                </div>
+                                <span class=" font-semibold text-sm">$ {{item.food.discounted}}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="float-end text-center">
+
+                            <a id="get_id" data-sid={{item.id}} class="cursor-pointer font-semibold hover:text-red-700 text-gray-500 bg-red-200 rounded text-white shadow-md px-1 absolute top-1 right-1">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            <div class=" text-center shadow-md ">
+                                <div class="border rounded px-1 bg-yellow-300 space-x-2 space-y-2 top-11 right-1 absolute">
+                                    <span id="minus" data-sid={{item.id}} ><i class="bi bi-dash cursor-pointer"></i></span> 
+                                    <span id="quantity">{{item.quantity}} </span>
+                                    <span id="plus" data-sid={{item.id}} ><i class="bi bi-plus-lg cursor-pointer"></i></span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    {% empty %}
+                        <div class=" py-2 px-3 bg-indigo-500 font-bold text-white text-center shadow-md rounded  ">Oops.. 😏  Your cart is empty !</div>
+                    {% endfor %}
+
+                    <div class="app">
+                        <ul class="hs full no-scrollbar">
+                            {% comment %} {% for item in items %}
+                            {{item.get_absolute_url}}
+                            {% include 'components/food-card.html' with  url=item.get_absolute_url image=item.image.url title=item.name disc=item.deatil type=item.type_of price=item.discounted old_price=item.price  %}
+                            {% endfor %} {% endcomment %}
+                            {% comment %} <li class="item">   
+                                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                    <svg class="w-10 h-10 mb-2 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" clip-rule="evenodd"></path><path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z"></path></svg>
+                                    <a href="#">
+                                        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Need a help in Claim?</h5>
+                                    </a>
+                                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Go to this step by step guideline process on how to certify for your weekly benefits:</p>
+                                    <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
+                                        See our guideline
+                                        <svg class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg>
+                                    </a>
+                                </div> {% endcomment %}
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="">
+                    <div class=" bg-transparent shadow-md rounded">
+                        {% comment %} <h2 class="text-2xmd font-bold">Apply coupon</h2>
+                        <h6>Offers for you ?</h6>
+                        <input class="rounded focus:border-red-600 mt-2" type="text" name="coupon_code" value="">
+                        <button class="border rounded bg-gray-400 px-4 py-2 text-white">Apply</button> {% endcomment %}
+                        {% if marketing %}
+                            <a href="{{marketing.get_absolute_url}}">
+
+                                <img class="rounded" src="{{marketing.image.url}}" alt="{{marketing.itmes.slug}}">
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="rounded border mt-3 p-2 mt-2 shadow-md">
+                        <h2 class="text-2xmd font-bold">Order summary</h2>
+                        <hr>
+                        <div class=" justify-evenly mt-2">
+                            <h4 class="float-right font-bold" id="get_cart_price">{{cart.get_cart_price}}</h4>
+                            <h4 class="font-bold">Price :</h4>
+                        </div>
+                        <div class="pb-1 justify-evenly">
+                            <h4 class="float-right font-bold text-gray-400" id="delivery_charge">{{cart.delivery_charge}}</h4>
+                            <h4 class="font-bold text-gray-400">Delivery :</h4>
+                        </div>
+                        <div class="pb-1 justify-evenly">
+                            <h4 class="float-right font-bold" id="coupond_amount">- {{cart.coupond_amount}}</h4>
+                            <h4 class="font-bold">Discount :</h4>
+                        </div>
+                        <hr>
+                        <div class="pb-1 justify-evenly">
+                            <h4 class="float-right font-bold text-green-500" id="get_delivery_amount">{{cart.get_delivery_amount}}</h4>
+                            <h4 class="font-bold text-green-500">Subtotal :</h4>
+                        </div>
+
+                        <a href="{% url 'address' %}" class="text-center font-bold">
+                            <div class="bg-red-600 text-white py-2 px-3 mt-2  cursor-pointer rounded text-center mt-2 p-3">
+                                Checkout
+                            </div>
+                        </a>    
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#get_id').on('click', function () {
+        let get_id = $(this).attr('data-sid')
+        data_obj = {
+            item_obj: get_id,
+        }
+        $.ajax({
+            url : '{% url "delete_item" %}',
+            method : 'GET',
+            data : data_obj,
+            success : function(data){
+                window.location.reload()
+            }
+        })
+
+    })
+
+
+    $('#minus').on('click', function () {
+        let get_id = $(this).attr('data-sid')
+        data_obj = {
+            item_obj: get_id,
+            action:'minus'
+        };
+        updateQuanitytCart(data_obj);
+
+    })
+
+    $('#plus').on('click', function () {
+        let get_id = $(this).attr('data-sid')
+        data_obj = {
+            item_obj: get_id,
+            action:'plus'
+        };
+        updateQuanitytCart(data_obj)
+
+    })
+
+
+    function updateQuanitytCart(data_obj){
+        let get_cart_price = document.getElementById('get_cart_price') 
+        let delivery_charge = document.getElementById('delivery_charge') 
+        let coupond_amount = document.getElementById('coupond_amount') 
+        let get_delivery_amount = document.getElementById('get_delivery_amount') 
+        let quantity = document.getElementById('quantity')
+        
+        $.ajax({
+            url : '{% url "update-qty" %}',
+            method : 'GET',
+            data : data_obj,
+            success : function(data){
+                if (data.quantity == 0){
+                    $.ajax({
+                        url : '{% url "delete_item" %}',
+                        method : 'GET',
+                        data : data_obj,
+                        success : function(data){
+                            window.location.reload()
+                        }
+                    })
+                }
+                console.log(data)
+                delivery_charge.innerText = data.delivery_charge
+                coupond_amount.innerText = data.coupond_amount
+                get_delivery_amount.innerText = data.get_delivery_amount
+                quantity.innerText = data.quantity
+                get_cart_price.innerText = data.get_cart_price
+            }
+        })
+    }
+
+</script>
+{% endblock %}

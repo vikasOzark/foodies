@@ -1,0 +1,1 @@
+RAZOR_PAY_SECRET = 'rzp_test_CACIK9VunIicKe'

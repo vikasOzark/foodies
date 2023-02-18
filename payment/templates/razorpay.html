@@ -1,0 +1,29 @@
+
+ <script>
+    var options = {
+
+        key: "{{razorpay_merchant_key}}",
+        amount: "{{ razor_pay.razorpay_amount }}",
+        name: "Tiffines",
+      
+        // Pass the `id` obtained in the response of Step 1
+        order_id: "{{  razor_pay.razorpay_order_id }}",
+        callback_url: "{{razor_pay.callback_url}}",
+        };
+        var rzp1 = new Razorpay(options);
+      
+        // add event listener to the payment button.
+        document.getElementById("pay-btn").onclick = function (e) {
+            let timeslot = document.getElementById('time-slot')
+            let error = document.getElementById('error');
+            if (timeslot.value == ''){
+                timeslot.classList.add('border-red-600')
+                error.classList.remove('hidden')
+            
+              } else {
+                rzp1.open();
+                e.preventDefault();
+                };
+            }
+        
+ </script>

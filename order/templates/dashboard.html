@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block title %}Foodie GEN | Product detail {% endblock title %}
+{% block dashboard %} text-red-600 {% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="container container lg:max-w-screen-lg mx-auto px-5">
+    <div class=" mt-5 rounded-lg flex p-2 mb-5 items-center">
+        <div class="object-cover rounded-full h-10 w-10 bg-blue-600 "></div>
+        <div class="flex list-none mx-3">
+            <li>
+                <a href="{% url 'dashbord-type' 'basic' %}"
+                    class="mx-3 bg-blue-300 px-3 py-1 rounded-full text-white font-bold shadow-md"> Basic</a>
+            </li>
+            <li>
+                <a href="{% url 'dashbord-type' 'orders' %}"
+                    class="mx-3 bg-blue-300 px-3 py-1 rounded-full text-white font-bold shadow-md"> Orders</a>
+            </li>
+            <li>
+                <a href="{% url 'dashbord-type' 'address' %}"
+                    class="mx-3 bg-blue-300 px-3 py-1 rounded-full text-white font-bold shadow-md"> address</a>
+            </li>
+        </div>
+    </div>
+
+    {% if detail_type == 'orders' %}
+
+    <div class="bg-white p-5 rounded-md shadow-lg">
+        <div class="">
+            <div class="max-w-xl">
+                <h1 id="your-orders-heading" class="text-3xl font-extrabold tracking-tight text-gray-900">Your Orders
+                </h1>
+                <p class="mt-2 text-sm text-gray-500">Check the status of recent orders.</p>
+            </div>
+
+            {% for order in my_orders %}
+            {% include 'components/orders.html' with order_id=order.order_id order_time=order.created_at name=order.get_order_item.food.name image=order.get_order_item.food.image.url detail=order.get_order_item.food.deatil price=order.get_order_item.food.discounted url=order.get_order_item.food.get_absolute_url status=order.payment_status %}
+            {% empty %}
+            <p class="text-2xl text-gray-400 font-bold text-center">No orders !</p>
+            {% endfor %}
+
+
+
+            <!-- More orders... -->
+        </div>
+    </div>
+</div>
+
+{% elif detail_type == 'address' %}
+<!-- {% include 'components/address.html' %} -->
+
+<div class="grid lg:grid-cols-2 md:grid-cols-3 sm:grid-cols-1 gap-2 mb-5 ">
+    {% for address in addresses %}
+    <div class=" shadow-md border-l-8 font-bold  border-indigo-500 border text-blue-900 py-2 px-3 rounded-lg ">
+        <!-- <i class="bi bi-trash float-right align-center mt-2" id="{{address.id}}"
+            onclick="deleteAddress('{{address.id}}')"></i> -->
+            <a href="{% url 'address' %}"><i class="bi bi-trash float-right align-center mt-2" ></i></a>
+        <address>{{address.get_full_address}} </address>
+    </div>
+    {% endfor %}
+    <!-- <div class="">
+        <a onclick="toggleModal()"
+            class="bg-indigo-500 py-2 px-3 cursor-pointer rounded-lg grid font-bold text-white hover:bg-indigo-400 transition-all place-items-center">
+            <p>Add new address</p>
+            <h3><i class="bi bi-plus-lg"></i></h3>
+        </a>
+    </div> -->
+
+</div>
+
+{% elif detail_type == 'basic' %}
+{% include 'components/basic.html' %}
+
+{% endif %}
+
+
+<div class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="modal">
+    <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity">
+            <div class="absolute inset-0 bg-gray-900 opacity-75">
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+            <div class="inline-block align-center bg-white rounded-lg z-0 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                <div type="button" role="button"
+                    class="py-1 px-2 float-right bg-blue-200 text-white rounded hover:bg-blue-400 m-1 z-10"
+                    onclick="toggleModal()"><i class="bi bi-x-lg"></i></div>
+
+                {% include 'components/address.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- <div class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="otp-modal">
+    <div class="flex  items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity">
+            <div class="absolute inset-0 bg-gray-900 opacity-75">
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+            <div class="inline-block align-center bg-white rounded-lg z-0 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                <button type="button"
+                    class="py-1 px-2 float-right bg-blue-200 text-white rounded hover:bg-blue-400 m-1 z-10"
+                    onclick="toggleOtpModal()"><i class="bi bi-x-lg"></i></button>
+                
+                    <div class="p-3 text-center flex flex-wrap justify-center items-center">
+                        <p class="mb-2">We have sent OTP on your entered phone number</p>
+                        <input type="text" id="otp" class="border rounded border-l-8 h-8" placeholder="Please enter OTP"><p></p>
+                        <button class="bg-blue-400 py-1 px-4 shadow hover:bg-blue-600 transition-int-out rounded mt-2 font-medium text-white" onclick="verifyOtp()">Verify</button>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" defer></script>
+<script>
+    function toggleModal() {
+        document.getElementById('modal').classList.toggle('hidden')
+    }
+
+    function toggleOtpModal() {
+        document.getElementById('otp-modal').classList.toggle('hidden')
+    }
+
+    function verifyOtp() {
+        let otp = document.getElementById('otp').value;
+
+    }
+
+
+    function deleteAddress(id) {
+
+        $.ajax({
+            url: "{% url 'address-delete' %}",
+            method: 'POST',
+            data: {
+                pk: id,
+                csrfmiddlewaretoken: '{{csrf_token}}'
+            },
+
+            success(data) {
+                window.location.reload()
+            }
+
+        })
+    }
+</script>
+{% endblock %}

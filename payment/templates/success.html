@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you </title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+    <div class="flex h-screen justify-center items-center">
+        <div class=""> <!-- ⬅️ THIS DIV WILL BE CENTERED -->
+            <div class="">
+                <div class="bg-white p-6  md:mx-auto">
+                  <svg viewBox="0 0 24 24" class="text-green-600 w-16 h-16 mx-auto my-6">
+                      <path fill="currentColor"
+                          d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
+                      </path>
+                  </svg>
+                  <div class="text-center">
+                      <h3 class="md:text-2xl text-base text-gray-900 font-semibold text-center">Order Placed !</h3>
+                      {% if order.payment_mathod == 'ONLINE' %}
+                            <p class="text-gray-600 my-2">Thank you for completing your secure online payment.</p>
+                            <p> Have a great day!  </p>
+                        {% else %}
+                        <p class="text-gray-600 my-2">Thank you for completing your order with us.</p>
+                        <p> Have a great day!  </p>
+                        {% endif %}
+                      <div class="py-10 text-center">
+                          <a href="{% url 'menu' %}" class="px-12 rounded-md shadow-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
+                              WANT MORE 
+                         </a>
+
+                         
+                        </div>
+                    </div>
+                </div>
+                <div class="container lg:max-w-screen-lg mx-auto px-2 mb-5">
+                        <div class=" mt-3 bg-blue-100 p-3 rounded-lg shadow-lg ">
+                        <div class="border rounded">
+                            <h5 class="font-medium text-orange-500 text-2xl text-center">Order ID : <strong>#{{order.order_id}}</strong></h5>
+                            {% if order.payment_mathod == 'ONLINE' %}
+                            <h5 class="font-medium text-orange-400 text-center">Payment ID : {{order.payment_id}} </h5>
+                            {% endif %}
+
+                        </div>
+                     </div>
+                     <small class="text-gray-400">*You can find this order number and order detail in you dashboard</small><p></p>
+                     <small class="text-gray-400">*You will receive your invoice and detail on your whatsapp inbox</small>
+                </div>
+            </div>
+        </div>
+      </div>
+</body>
+</html>
+
