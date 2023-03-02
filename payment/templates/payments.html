@@ -3,8 +3,8 @@
 {% block menu%}active{%endblock %} 
 {% block content %}
 <div class="container  lg:max-w-screen-lg mx-auto">
-  <div class="mt-2 sm:mt-0  p-3">
-    <div class="h-7 w-7 rounded-full bg-gray-400 hover:bg-gray-500 cursor-pointer transition-all shadow-md mb-1 text-white flex items-center justify-center" title="go back" onclick="history.back()"><i class="bi bi-arrow-left-circle text-lg"></i></div>
+  <div class="mt-20 sm:mt-0  p-3">
+    <div class="h-7 w-7 rounded-full mt-12 bg-gray-400 hover:bg-gray-500 cursor-pointer transition-all shadow-md mb-1 text-white flex items-center justify-center" title="go back" onclick="history.back()"><i class="bi bi-arrow-left-circle text-lg"></i></div>
     <div class="md:grid grid  md:grid-cols-3 sm:grid-cols-1  md:gap-6 mb-5">
       <div class=" md:mt-0 bg-white p-2 shadow-md rounded-md mb-5">
         <div class="px-2 sm:px-0 ">
@@ -14,7 +14,7 @@
       
           <div class="p-2 rounded bg-gray-100  content-center mt-3">
               <input type="text" id="coupon" class="rounded bg-white" style="height:2em">
-              <a class="px-2 py-1 text-white font-bold border bg-orange-500 rounded cursor-pointer hover:bg-orange-600 transition-all" onclick="couponApply()">Apply</a>
+              <a class="px-2 py-1 text-white font-bold border bg-red-500 rounded cursor-pointer hover:bg-red-600 transition-all" onclick="couponApply()">Apply</a>
               <p class="text-red-600 " id="message-div"></p>
           </div>
           {% if cart_obj.coupon_applied == 1 %}
@@ -62,7 +62,7 @@
             <address class="text-gray-600">{{cart_obj.get_address}}</address>
           </div>
 
-          <select name="" class=" rounded-l p-2 shadow-md border font-bold text-center h-10" id="time-slot">
+          <select name="" class=" rounded-l p-2 ml-2 shadow-md border font-bold text-center h-10" id="time-slot">
             <option class="font-bold border-0 " value="">---- select time slot ----</option>
             <option class="font-bold border-0 " value="Breakfast">Breakfast : ( 10:00 to 10:45 AM )</option>
             <option class="font-bold border-0 " value="Lunch">Lunch : ( 01:00 to 1:45 PM )</option>
@@ -115,7 +115,6 @@
 </div>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 {% include 'razorpay.html' %}
 {% include 'coupon_apply.html' %}
 <script>

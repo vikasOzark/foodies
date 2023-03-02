@@ -1,0 +1,27 @@
+{% extends 'dash_base.html' %}
+{% block kitchen %}text-blue-600 border-blue-500 {% endblock %}
+{% block content %}
+<div class=" rounded p-2 mt-2 m-2 grid md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1">
+    {% for item in items %}
+    <div class="rounded lg:w-72 ms:w-72 mb-2 border-2 border-blue-600">
+        <div class=" items-center p-2 justify-between bg-white rounded-md border-b shadow-md relative">
+            <div class="flex"> <!-- product -->
+                {% comment %} <div class="w-20 rounded">
+                    <img class="h-15 rounded" src="{{item.food__image}}" alt="">
+                </div> {% endcomment %}
+                <div class="flex relative flex-col justify-center ml-4 flex-grow">
+                    <span class="font-bold text-gray-700">{{item.food__name}}</span>
+
+                    <span class="text-gray-500 font-bold">Quantity : {{item.total}}</span>
+                    <div id="tooltip-light" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+                        tasty food coming right up !
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

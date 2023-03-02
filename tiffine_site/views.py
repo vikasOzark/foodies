@@ -535,3 +535,7 @@ def handler500(request):
     response = render(request, ".500.html", context=context)
     response.status_code = 500
     return response
+
+
+def returndata(request):
+    return JsonResponse({'data' : 'True'})

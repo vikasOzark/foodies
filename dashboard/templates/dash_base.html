@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        #navbar {
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+
+
+<body class=" " style="background-color:rgba(177, 177, 177, 0.075)">
+
+    <header id="navbar" class="z-50 border-white shadow-lg mb-3">
+        <nav class=" top-0 z-30 w-full bg-red  px-2 sm:px-4 py-2.5 rounded p-0  ">
+            <a href="{% url 'dashboard' %}" class="container flex flex-wrap items-center justify-between mx-auto">
+                <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 mr-3 sm:h-9" alt="Flowbite Logo" /> -->
+                <span class="self-center text-xl font-semibold whitespace-nowrap text-orange-500 font-bold">
+                    Super Admin
+                </span>
+            </a>
+        </nav>
+    </header>
+
+    <div id="alert-message" class="fixed top-14 right-0 p-4 z-40 text-blue-600 text-sm" width="20" role="alert">
+
+    </div>
+
+    <div class="container lg:max-w-screen-lg mx-auto">
+
+        <div class="flex overflow-x-auto overflow-y-hidden border-b border-gray-200 whitespace-nowrap mb-2">
+            <a href="{% url 'kitchen' %}" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center {% block kitchen %}{% endblock %} sm:px-4 -px-1 whitespace-nowrap focus:outline-none border-b-2 hover:border-gray-400">
+                <i class="bi bi-card-list"></i>
+        
+                <span class="mx-1 text-sm sm:text-base">
+                    Items Count
+                </span>
+            </a>
+            
+            <a href="{% url 'dashboard' %}?type=breakfast" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center {% block break %}{% endblock %}  bg-transparent border-b-2 sm:px-4 -px-1 whitespace-nowrap focus:outline-none hover:border-gray-400">
+                <i class="bi bi-brightness-high-fill"></i>
+        
+                <span class="mx-1 text-sm sm:text-base">
+                    Breakfast
+                </span>
+            </a>
+        
+            <a href="{% url 'dashboard' %}?type=lunch" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center text-gray-700 bg-transparent border-b-2 {% block lunch %}{% endblock %} border-transparent sm:px-4 -px-1 owrap cursor-base focus:outline-none hover:border-gray-400">
+                <i class="bi bi-snow3"></i>
+        
+                <span class="mx-1 text-sm sm:text-base">
+                    Lunch
+                </span>
+            </a>
+        
+            <a href="{% url 'dashboard' %}?type=dinner" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center text-gray-700 bg-transparent border-b-2 border-transparent {% block dinner %}{% endblock %} sm:px-4 -px-1 owrap cursor-base focus:outline-none hover:border-gray-400">
+                <i class="bi bi-moon-stars"></i>
+                <span class="mx-1 text-sm sm:text-base">
+                    Dinner
+                </span>
+            </a>
+    
+            <a href="{% url 'dashboard' %}?type=complete" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center text-gray-700 bg-transparent border-b-2 border-transparent {% block done %}{% endblock %} sm:px-4 -px-1 owrap cursor-base focus:outline-none hover:border-gray-400">
+                <i class="bi bi-patch-check"></i>
+        
+                <span class="mx-1 text-sm sm:text-base">
+                    Complete order
+                </span>
+            </a>
+        </div>
+
+
+    {% block content %}
+    {% endblock %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+    <!-- <script>
+
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+
+        window.onscroll = function() {myFunction()};
+
+        var navbar = document.getElementById("navbar");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+        } else {
+            navbar.classList.remove("sticky");
+        }
+        }
+        
+
+        function updateCart(){
+            $.ajax({
+              url:'{% url "update-cart" %}',
+               method: 'GET',
+               success(data){
+                  let cart = document.getElementById('item-count');
+                  cart.innerText = ''
+                  cart.innerText = data.count
+               }
+          })
+          }
+        
+        updateCart();
+        
+        let first_name = "{{user.first_name}}"
+        let last_name = "{{user.last_name}}"
+
+        var initials = first_name.charAt(0)+""+last_name.charAt(0);
+        document.getElementById("profile").innerHTML = initials;
+
+        
+    </script> -->
+
+</body>
+
+</html>

@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 #test change
 CSRF_TRUSTED_ORIGINS = [
-    'https://tiffine.herokuapp.com'
+    'https://89d9-183-83-209-231.in.ngrok.io/'
 ]
 # Application definition
 
@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'compressor',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     'tiffine_site',
     'cart',
     'order',
@@ -50,6 +52,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'robots',
+    'dashboard',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -147,12 +151,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_TZ = True
-
+TIME_ZONE = 'Asia/Kolkata'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -160,6 +159,17 @@ USE_TZ = True
 STATIC_URL = 'static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+]
+
+COMPRESS_ROOT = BASE_DIR / 'tailwind'
+COMPRESS_ENABLED = True
+# STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # STATICFILES_DIRS = [
@@ -192,3 +202,4 @@ LOGIN_REDIRECT_URL = 'menu'
 
 CORS_ALLOW_ALL_ORIGIN = True
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
+CSRF_FAILURE_VIEW = 'tiffine_site.csrf_falid.csrf_failure'

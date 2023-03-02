@@ -24,10 +24,6 @@
   background: rgba(155, 155, 155, 0.287);
 }
 
-* {
-  padding: 0;
-  margin: 0;
-}
 
 .float {
   position: fixed;

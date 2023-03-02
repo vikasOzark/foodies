@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MainDishModel, AddToFevorate, CommentAndRating, AddressModel, OrderDetails, Cart, Items, DeliveryCharges, Coupon, CustomersFavorite
+from .models import MainDishModel, AddToFevorate, CommentAndRating, AddressModel, OrderDetails, Cart, Items, DeliveryCharges, Coupon, CustomersFavorite, PeopleFavorite
 
 # Register your models here.
 
@@ -52,6 +52,6 @@ class ItemAdmin(admin.ModelAdmin):
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['coupon','type_of','value','validity','created','mode','active',] 
 
-@admin.register(CustomersFavorite)
-class ItemAdmin(admin.ModelAdmin):
-    list_display = ['product', 'created_at'] 
+@admin.register(PeopleFavorite)
+class PeopleFavoriteAdmin(admin.ModelAdmin):
+    list_display = ['location'] 

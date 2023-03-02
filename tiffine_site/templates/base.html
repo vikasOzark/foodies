@@ -1,14 +1,31 @@
+{% load static %}
+{% load compress %}
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+    <meta name="keywords" content="lunch options, breakfast options, dinner options, lunch option, breakfast option, dinner option, tiffin service, tiffin wala, food service">
+    <meta name="description" content="Foodie hub is one stop for your breakfast, lunch and dinner hunger. Order now.">
+    <meta name="author" content="Foodie hub">
+
     <title>{% block title %}{% endblock %}</title>
+
+    <link rel="icon" type="image/x-icon" href="{% static 'images/assets/favicon_icon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/utility.css' %}">
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %}
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
 
     <style>
         .sticky {
@@ -20,19 +37,35 @@
         #navbar {
         overflow: hidden;
         }
-    </style>
 
+    </style>
+    <script>
+        document.onreadystatechange = function() {
+            if (document.readyState !== "complete") {
+                document.querySelector(
+                "body").style.visibility = "hidden";
+                document.querySelector(
+                "#loader").style.visibility = "visible";
+            } else {
+                document.querySelector(
+                "#loader").style.display = "none";
+                document.querySelector(
+                "body").style.visibility = "visible";
+            }
+        };
+    </script>
+    
 </head>
 
 
 <body class=" " style="background-color:rgba(161, 161, 161, 0.075)">
-
+    <div id="loader" class="center"></div>
     <header id="navbar" class="z-50">
         <nav class=" top-0 z-30 w-full bg-red border-gray-200 px-2 sm:px-4 py-2.5 rounded p-0  " >
             <div class="container flex flex-wrap items-center justify-between mx-auto">
                 <a href="{% url 'menu' %}" class="flex items-center">
                     <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 mr-3 sm:h-9" alt="Flowbite Logo" /> -->
-                    <span class="self-center text-xl font-semibold whitespace-nowrap text-orange-500 font-bold">Foodie zen</span>
+                    <img class="h-auto w-32 rounded" src="{%static 'images/assets/logo-removebg-preview.png' %}" alt="">
                 </a>
                 <!-- <div class="bg-blue-100 rounded py-1 px-2 cursor-pointer font-bold hover:bg-blue-300 ease-out">
                     <i class="bi bi-search"></i>
@@ -72,7 +105,7 @@
                 
                 <div class="hidden w-full md:block md:w-auto bg-transparent" id="navbar-default">
                     <ul
-                        class="flex shadow-md flex-col px-2 items-center border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white bg-transparent ">
+                        class="flex shadow-lg flex-col px-2 items-center border border-gray-300 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white ">
                         <!-- <li>
                 <a href="{% url 'index' %}" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-red-600 md:p-0   :text-red-600" aria-current="page">Home</a>
             </li> -->
@@ -93,7 +126,7 @@
                             <!-- This is an example component -->
                             <div class="max-w-lg mx-auto">
                                 
-                                <div class="text-blue-500 rounded-full cursor-pointer font-medium rounded-lg text-sm px-2 py-1.5 text-center inline-flex items-center" type="button" data-dropdown-toggle="dropdown">
+                                <div class="text-blue-500 rounded-full cursor-pointer font-medium text-sm px-2 py-1.5 text-center inline-flex items-center" type="button" data-dropdown-toggle="dropdown">
                                     <div class="h-7 w-7 rounded-full bg-green-300 text-white flex items-center justify-center  m-1" id="profile"></div>
                                     {% if user.is_authenticated %}
                                         {{user.username}}
@@ -135,16 +168,21 @@
 
     {% block content %}
     {% endblock %}
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.lordicon.com/lusqsztk.js"></script>
 
     <footer class="" id="footer">
         <div
             class="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
             <a href="{% url 'menu' %}" class="flex items-center">
                 <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 mr-3 sm:h-9" alt="Flowbite Logo" /> -->
-                <span class="self-center text-xl font-semibold whitespace-nowrap text-orange-500 font-bold">Foodie zen</span>
+                <img class="h-auto w-32 rounded bg-transparent" src="{%static 'images/assets/logo-removebg-preview.png' %}" alt="">
             </a>
+            <div class="space-x-2 text-gray-400 text-sm">
+                <a href="{% url 'privacy-policy' %}" class=" hover:text-gray-600">Privacy policy</a>
+                <a href="{% url 'term-condition' %}" class=" hover:text-gray-600">Term & conditions</a>
+
+                <a href="{% url 'contact-us' %}" class=" hover:text-gray-600">Contact Us</a>
+
+            </div>
 
             <p class="text-sm text-gray-600     :text-gray-300">© Copyright 2021. All Rights Reserved.</p>
 
@@ -186,12 +224,7 @@
     </footer>
 
     <!-- script part start here -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/modal.min.js"
-        integrity="sha512-aAW/TaSuYfyjTcMsaYP67Dwe0vI5d7ej9X7NJBPkhafB+D5kx57flRNo8+tOXWA0Gcq0MBmhPatrvn1YwvH9gQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.lordicon.com/lusqsztk.js"></script>
     <script>
 
         if ( window.history.replaceState ) {
@@ -237,174 +270,3 @@
 
 </body>
 </html>
-
-{% comment %} 
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/payment-check_.css' %}">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-<div class="container mt-4">
-    <div class="row border shadow-sm m-1 p-2 rounded item-check d-flex bg-light justify-content-center">
-        <h4 class=" text-success opacity-50">Cart Item <span class="text-span"> ( Max 5 items you can order )</span>
-        </h4>
-        <!-- <h6 class="d-flex d-inline-block text-dark opacity-25">( Please remove the items that not needed ! )</h6> -->
-        <div class="row">
-            {% for cart in dish_instance %}
-            <div class="col-sm-12 col-md-4 effect">
-                <div class="card mb-2 shadow-sm ">
-                    <div class="card-body bg-light rounded-1 ">
-                        <a href="#" class="btn-close get_id float-end" id="del-cart" data-sid="{{cart.id}}"></a>
-                        <h5 class="card-title">{{cart.item.name}}</h5>
-                        <p class="card-text">{{cart.item.deatil}}</p>
-                        <p class=" mb-0 btn btn-warning text-center">&#x20B9; : <span
-                                id="amount-{{cart.id}}">{{cart.amount_plus}}</span></p>
-                        <!-- <h5 class=" text-dark opacity-50"><small>saved &#x20B9; : 25</small></h5> -->
-
-                        <div class=" d-inline p-2 ">
-                            <a class="minus-{{cart.id}}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-dash" viewBox="0 0 16 16">
-                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
-                                </svg>
-                            </a>
-                            <p class=" d-inline" id="quantity-{{cart.id}}" data-sid="sid{{cart.id}}">{{cart.quantity}}
-                            </p>
-                            <a class="plus-{{cart.id}} plus">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-            <script>
-                $('.minus-{{cart.id}}').on('click', function () {
-                    let quan = $('#quantity-{{cart.id}}').html();
-                    quan--;
-
-                    let amount_obj = '{{cart.item.discounted}}'
-                    let amount_val = $('#amount-{{cart.id}}').html();
-
-                    amount = amount_val - amount_obj;
-
-                    $('#amount-{{cart.id}}').html(amount);
-                    $('#quantity-{{cart.id}}').html(quan);
-
-                    data_obj = {
-                        item_id: '{{cart.id}}',
-                        quantity: quan
-                    }
-                    $.ajax({
-                        url: "{% url 'adding_quantity' %}",
-                        method: 'GET',
-                        data: data_obj,
-                        dataType: 'json',
-                        success: function (data) {
-                            console.log('data comming :', data)
-                        }
-                    })
-
-                })
-
-                $('.plus-{{cart.id}}').on('click', function () {
-                    let quan = $('#quantity-{{cart.id}}').html();
-                    quan++;
-
-                    let amount = '{{cart.item.discounted}}'
-                    amount = quan * amount;
-
-                    $('#amount-{{cart.id}}').html(amount);
-                    let value = $('#quantity-{{cart.id}}').html(quan);
-
-                    data_obj = {
-                        item_id: '{{cart.id}}',
-                        quantity: quan
-                    }
-                    $.ajax({
-                        url: "{% url 'adding_quantity' %}",
-                        method: 'GET',
-                        data: data_obj,
-                        dataType: 'json',
-                        success: function (data) {
-                            console.log('data comming :', data)
-                        }
-                    })
-                })
-
-
-            </script>
-
-            {% empty %}
-            <p class="alert alert-warning shadow-sm">Doesn't have any items here !</p>
-            {% endfor %}
-        </div>
-
-    </div>
-
-    <div class="row border shadow m-1 p-2 mt-4 rounded bg-light">
-        <div class="col ">
-            <h4 class="text-success opacity-50"> Payment summury </h4>
-            <div class="col p-1">
-
-                <h6>Total Amount : <strong id="total_amount">{{ final_amount }}</strong></h6>
-                <h6>Delivery charges : 50 <span>( Free over 500 value )</span> </h6>
-                <h6>Discount : <strong> 5%</strong></h6>
-                <hr>
-                <h6>Grand Total : <strong id='plus_delivery'>{{plus_delivery}}</strong></h6>
-                <p></p>
-                <button class="btn btn-warning " type="button" id="pay-btn">Pay Online</button>
-                <button class="btn btn-success " type="button">Pay Cash</button>
-                <p class="d-inline opacity-25  ">* T & C Apply</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
-<!-- <button id="rzp-button1">Pay</button> -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<script>
-
-
-    var options = {
-
-        // Enter the Key ID generated from the Dashboard
-        key: "{{ razorpay_merchant_key }}",
-
-        // Amount is in currency subunits.
-        // Default currency is INR. Hence,
-        // 50000 refers to 50000 paise
-        amount: "{{ razorpay_amount }}",
-        currency: "{{ currency }}",
-
-        // Your/store name.
-        name: "Tiffines",
-
-        // Pass the `id` obtained in the response of Step 1
-        order_id: "{{ razorpay_order_id }}",
-        callback_url: "{% url 'paymenthandler' %}",
-    };
-
-    // initialise razorpay with the options.
-    var rzp1 = new Razorpay(options);
-
-    // add event listener to the payment button.
-    document.getElementById("pay-btn").onclick = function (e) {
-        rzp1.open();
-        e.preventDefault();
-    };
-    
-
-
-</script>
-
-     
- {% endcomment %}

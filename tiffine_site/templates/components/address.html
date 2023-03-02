@@ -13,13 +13,13 @@
             <div class="col-span-6 sm:col-span-6">
               <label for="street" class="block text-sm font-medium text-gray-700">Street/House number</label>
               <input type="text" name="street" id="street" value="{{address.street}}"
-                autocomplete="address"
+                autocomplete="address" required
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
             </div>
             <div class="col-span-3 sm:col-span-4">
               <label for="landmark" class="block text-sm font-medium text-gray-700">landmark</label>
               <input type="text" name="landmark" id="landmark" value="{{address.landmark}}"
-                autocomplete="apartment"
+                autocomplete="apartment" required
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
             </div>
 
@@ -31,16 +31,22 @@
             </div>
 
             <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-              <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-              <input type="text" name="city" id="city" autocomplete="address-level2" value="{{address.city}}"
+              <label for="city" class="block text-sm font-medium text-gray-700">Area</label>
+              {% comment %} <input type="text" name="city" id="city" autocomplete="address-level2" value="{{address.city}}" required
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                 {% endcomment %}
+
+                <select class="mt-1 block w-full h-10 text-center rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" name="city" id="city">
+                  {% include 'components/delhi-area.html' %}
+                </select>
+                 
             </div>
 
 
             <div class="col-span-6 sm:col-span-3 lg:col-span-2">
               <label for="pincode" class="block text-sm font-medium text-gray-700">Pincode</label>
               <input type="text" name="pincode" id="pincode" value="{{address.pincode}}"
-                autocomplete="pincode"
+                autocomplete="pincode" required
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
             </div>
 
@@ -48,9 +54,10 @@
         </div>
         <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
           <button type="submit"
-            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save
-            address</button>
+            class=" inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Save address</button>
         </div>
       </div>
     </form>
   </div>
+

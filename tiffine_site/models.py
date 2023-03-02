@@ -10,6 +10,7 @@ from datetime import datetime
 import uuid
 
 
+
 type_of = (
     ('VRG', 'VEG'),
     ('NON-VEG', 'NON-VEG'),
@@ -29,7 +30,9 @@ class MainDishModel(models.Model):
     protein = models.CharField(max_length=20, null=True, blank=True)
     fat = models.CharField(max_length=20, null=True, blank=True)
     fiber = models.CharField(max_length=20, null=True, blank=True)
-    slug = models.SlugField(unique=True, null=True)
+    slug = models.SlugField(unique=True, null=True, blank=True)
+    rating = models.FloatField(default=3.7, null=True)
+    
 
     def __str__(self):
         return str(self.name)
@@ -113,10 +116,6 @@ class Cart(models.Model):
         return super(Cart, self).save(*args, **kwargs)
 
     def create_cart_id(self):
-        # date_ins = datetime.datetime.now()
-        # date = date_ins.today().date()
-        # time = date_ins.time().strftime("%H:%M")
-        # return f'{date}-{time}'
         return str(uuid.uuid4())[:10]
 
     def get_cart_items(self):
@@ -157,13 +156,17 @@ class Cart(models.Model):
             return False
         else:
             return is_coupon.mode
+
     def get_coupon_obj(self):
         coupon = Coupon.objects.filter(coupon=self.coupon_used).first()
         if coupon is None:
             return False
         else:
             return coupon
-        
+
+    def get_total_item_quantity(self):
+        return self.get_cart_items().aggregate(count_total=Sum('quantity'))['count_total']
+    
 class Items(models.Model):
     cart = models.CharField(max_length=20)
     food = models.ForeignKey(MainDishModel, related_name='food', on_delete=models.CASCADE)
@@ -256,3 +259,13 @@ class CustomersFavorite(models.Model):
     product = models.ForeignKey(MainDishModel, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+
+
+class PeopleFavorite(models.Model):
+    LOCATION = (
+        ('CART', 'CART'),
+        ('MENU', 'MENU')
+    )
+    
+    food = models.ManyToManyField(MainDishModel)
+    location = models.CharField(max_length=20, choices=LOCATION)

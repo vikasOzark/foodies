@@ -3,13 +3,14 @@ from .views import *
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
 
 
 urlpatterns = [
     path('not', IndexView.as_view(), name='index'),
     path('', MenuView.as_view(), name='menu'),
     path('menu/<slug:slug>', MenuView.as_view(), name='menu'),
-    path('order-deatial/<slug:slug>', FoodDeatail.as_view(), name='deatail-view'),
+    path('<slug:slug>', FoodDeatail.as_view(), name='deatail-view'),
     path('payment-checkout/',
          PaymentCheckout.as_view(), name='payment-checkout'),
     path('payment-checkout/<int:pk>',
@@ -29,6 +30,10 @@ urlpatterns = [
     path('adding_quantity/', adding_quantity, name='adding_quantity'),
     path('total_amount/', total_amount, name='total_amount'),
     path('favorite-temp/', favorite_temp, name='favorite-temp'),
+    path('data/', returndata ),
+    path('privacy-policy/', TemplateView.as_view(template_name="privacypolicy.html"), name='privacy-policy'),
+    path('term-condition/', TemplateView.as_view(template_name="term_condition.html"), name='term-condition'),
+    path('contact-us/', TemplateView.as_view(template_name="contactus.html"), name='contact-us'),
 
 
 

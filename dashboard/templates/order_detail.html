@@ -1,0 +1,67 @@
+{% extends 'dash_base.html' %}
+
+
+{% block content %}
+
+<div class="container lg:max-w-screen-lg mx-auto px-5 text-gray-500">
+    <div class="rounded-lg p-2 font-bold bg-blue-50 mt-2 ">
+        <h3>Order ID : #{{order.order_id}} </h3>
+        <h3>Customer name : {{order.user.first_name}} {{order.user.last_name}} </h3>
+        <h3>Customer phone : <a href="tel:9958896169">{{order.get_user_detail.phone}} 
+            <i class="bi bi-telephone-forward text-green-500"></i>
+            </a>
+        </h3>
+        {% if order.get_user_detail.altenate_number %}
+            <h3>Alternate phone : <a href="tel:9958896169">{{order.get_user_detail.altenate_number}} 
+                <i class="bi bi-telephone-forward text-green-500"></i></a> 
+            </h3>
+        {% endif %}
+    </div>
+    <div class=" rounded p-2 mt-2 bg-blue-100">
+        <p class="font-bold ">Address : {{order.cart.get_address}}</p>
+    </div>
+    <div class=" rounded p-2 mt-2 bg-blue-100">
+        <p class="font-bold ">Total Items : {{order.cart.get_cart_items.count}} | Total Quantity : {{order.cart.get_total_item_quantity}}</p>
+
+        {% for item in order.cart.get_cart_items %}
+        <div class="rounded lg:col-span-3 sm:col-span-3 md:col-span-3 lg:w-72 ms:w-72  p-2">
+            <div class=" items-center p-2 justify-between bg-white rounded-md border-b shadow-md relative">
+                <div class="flex"> <!-- product -->
+                    <div class="w-20 rounded">
+                        <img class="h-15 rounded" src="{{item.food.image.url}}" alt="">
+                    </div>
+                    <div class="flex relative flex-col justify-center ml-4 flex-grow">
+                        <span class="font-bold text-sm">{{item.food.name}}</span>
+
+                        <span class="text-gray-500 font-bold">Quantity : {{item.quantity}}</span>
+                        <div id="tooltip-light" role="tooltip"
+                            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+                            tasty food coming right up !
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class=" rounded py-2 mt-3 text-center flex flex-reverse float-right gap-2">
+        {% if order.order_status == 'DELIVERD' %}
+        {% else %}
+        <a href="{% url 'mark_cancel' order.id %}"
+            class="rounded px-2 py-1 bg-gray-200 hover:bg-red-300 hover:text-white transition-all cursor-pointer hover:shadow font-medium">
+             Cancel
+        </a>
+        <a href="{% url 'mark_complete' order.id %}"
+            class="rounded px-2 py-1 bg-gray-200 hover:bg-gray-300 hover:text-white transition-all cursor-pointer hover:shadow font-medium">
+             Delivered
+        </a>
+        {% endif %}
+        <a href="{{order.get_user_detail.phone}}"
+            class="rounded px-2 py-1 bg-green-700 hover:bg-green-600  text-white transition-all cursor-pointer hover:shadow font-medium">
+            Make call <i class="bi bi-telephone-forward"></i>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

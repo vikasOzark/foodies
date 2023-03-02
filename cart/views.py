@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from tiffine_site.models import MainDishModel, Cart, Items
+from tiffine_site.models import MainDishModel, Cart, Items, PeopleFavorite
 from django.views import generic
 from django.db.models import Q
 from django.http import JsonResponse
@@ -74,10 +74,18 @@ class CartView(LoginRequiredMixin, generic.View):
         context = {}
         cart = Cart.objects.filter(Q(user=self.request.user) & Q(cart_id=cart_id)).latest()
         cart_item = cart.get_cart_items()
+        
         context['items'] = cart_item
         context['cart'] = cart
+        context['favorite'] = self.people_favorite()
         context['marketing'] = BannersModel.objects.filter(banner_type='CART_IMG').first()
         return context
+    
+    def people_favorite(self):
+        food_item = PeopleFavorite.objects.filter(location='CART').first()
+        return food_item.food.all()
+         
+
 
 def delete_item(request):
     pk = request.GET.get('item_obj')

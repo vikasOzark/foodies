@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container lg:max-w-screen-lg mx-auto pt-10">
+    <div class="mt-5">
+        <strong class="mt-3">1.Introduction</strong>
+        <p>Welcome to Foodiehub ("the Website"). These terms and conditions ("Terms") govern your use of the Website. By accessing or using the Website, you agree to be bound by these Terms.</p>
+
+        <strong class="mt-3">2.User Conduct</strong>
+        <p>You agree to use the Website only for lawful purposes and in a manner that does not infringe the rights of, or restrict or inhibit the use and enjoyment of the Website by, any third party. Prohibited activities include but are not limited to:</p>
+
+        <ul>
+            <li><strong><i class="bi bi-caret-right-fill"></i> </strong> Engaging in any activity that may interfere with the functioning of the Website, such as hacking, phishing, or spamming.</li>
+        </ul>
+       
+        <strong class="mt-3">3.Intellectual Property</strong>
+        <p>The content and materials on the Website, including but not limited to text, images, graphics, logos, are owned by or licensed to Foodiehub. You may not use, reproduce, modify, or distribute any of the content or materials on the Website without our prior written consent.</p>
+
+        <strong class="mt-3">4.Limitation of Liability</strong>
+        <p>To the fullest extent permitted by law, Foodiehub shall not be liable for any direct, indirect, incidental, special, or consequential damages resulting from the use or inability to use the Website, including but not limited to damages for loss of profits, use, data, or other intangible losses.</p>
+
+        <strong class="mt-3">5.Links to Third-Party Websites</strong>
+        <p>The Website may contain links to third-party websites or resources. Foodiehub is not responsible for the content, products, or services on or available from those websites or resources. Links to third-party websites or resources do not imply any endorsement by Foodiehub of those websites or resources.</p>
+
+        <strong class="mt-3">6.Changes to the Terms</strong>
+        <p>Foodiehub reserves the right to modify these Terms at any time. Your continued use of the Website after any changes to the Terms constitutes your acceptance of the revised Terms.</p>
+
+        <strong class="mt-3">7.Governing Law</strong>
+        <p>These Terms shall be governed by and construed in accordance with the laws of [Jurisdiction]. Any disputes arising under or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of [Jurisdiction].</p>
+
+        <strong class="mt-3">8.Contact Us</strong>
+        <p>If you have any questions or concerns about these Terms, please contact us at {{settings.CONTECT_EMAIL}}.</p>
+    </div>
+</div>
+{% endblock %}

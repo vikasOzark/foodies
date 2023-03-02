@@ -1,0 +1,86 @@
+{% extends 'dash_base.html' %}
+
+{% if type == 'breakfast' %}
+    {% block break %} text-blue-600 border-blue-500 {% endblock %}
+{% elif type == 'lunch' %}
+    {% block lunch %} text-blue-600 border-blue-500  {% endblock %}
+{% elif type == 'dinner' %}
+    {% block dinner %} text-blue-600 border-blue-500 {% endblock %}
+{% elif type == 'complete' %}
+    {% block done %}text-blue-600 border-blue-500 {% endblock %}
+{% endif %}
+
+{% block content %}
+<div class="flex items-center py-1 px-2">
+    <button id="dropdownDefault" data-dropdown-toggle="dropdown"
+      class="text-blue-700 bg-primary-700 border-2 border-blue-900 hover:bg-primary-800 focus:ring-4 focus:outline-none  font-medium rounded-md text-sm px-4 py-1 text-center inline-flex items-center"
+      type="button">
+        Lookup
+      <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+  
+    <!-- Dropdown menu -->
+    <div id="dropdown" class="z-10 hidden w-56 p-3 sm:text-center bg-white rounded-md border border-blue-600 shadow-lg ">
+      <h6 class="mb-3 text-sm font-medium text-gray-900 ">
+        Search by Area
+      </h6>
+      <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+        {% for order in location %}
+            <li class="flex items-center">
+            <a href="{% url 'dashboard' %}?filter={{order.address__city}}&type={{type}}">{{order.address__city}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    </div>
+  </div>
+
+<div class="grid gap-2 md:grid-cols-4 sm:grid-cols-1 ">
+    <div class=" rounded lg:col-span-3 sm:col-span-3 md:col-span-3 p-2">
+        {% for order in orders %}
+        <div class=" items-center p-2 justify-between bg-white rounded-lg border-l-4 border-blue-400 shadow-md relative mb-2">
+            <div class="flex"> <!-- product -->
+
+                <div class="flex relative flex-col justify-center ml-4 flex-grow">
+                    <span class="absolute right-0 top-0 font-medium">#{{order.order_id}}</span>
+                    <span class="font-bold text-sm">{{order.address.locality}}</span>
+                    <span class="text-gray-500 font-bold">Items quantity : {{order.cart.get_cart_items.count}}
+                    {% comment %} <div id="tooltip-light" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+                        tasty food coming right up !
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div> {% endcomment %}
+                                            
+                    <div class=" font-semibold text-sm">Order mode : <span
+                        class="px-1 bg-green-300 rounded text-white shadow-lg"> {{order.payment_mathod}}</span>
+                    </div>
+                    <div class="">
+                        <span class=" font-medium text-red-400">{{order.time_slot}}</span>
+                    </div>
+
+                    <div class=" absolute right-0 bottom-0 font-medium">
+                        <a href="{% url 'detail' order.id %}" class="border rounded px-2 bg-gray-200 hover:bg-gray-300 transition-all cursor-pointer hover:shadow font-medium">
+                            Show details
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+
+                
+        </div>
+        {% endfor %}
+    </div>
+    <div class="rounded-lg shadow-lg bg-white p-2 m-2 h-60 overflow-x-auto">
+        <p>Order count ( Location ) </p>
+        <hr >
+        {% for order in location %}
+        <div class="">
+            <a href="{% url 'location-order' order.address__city %}?timeslot={{type}}" class="font-bold text-blue-800">{{ order.address__city }} : {{ order.total }}</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content%}

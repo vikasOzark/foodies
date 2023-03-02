@@ -1,31 +1,30 @@
 {% extends 'base.html' %}
-{% block title %}Foodie GEN | Product detail {% endblock title %}
+{% block title %}Foodie hub | Product detail {% endblock title %}
 {% block dashboard %} text-red-600 {% endblock %}
 
 {% block content %}
 {% load static %}
-<div class="container container lg:max-w-screen-lg mx-auto px-5">
+<div class="container lg:max-w-screen-lg mx-auto px-2">
     <div class=" mt-5 rounded-lg flex p-2 mb-5 items-center">
-        <div class="object-cover rounded-full h-10 w-10 bg-blue-600 "></div>
-        <div class="flex list-none mx-3">
+        <div class="flex list-none">
             <li>
                 <a href="{% url 'dashbord-type' 'basic' %}"
-                    class="mx-3 bg-blue-300 px-3 py-1 rounded-full text-white font-bold shadow-md"> Basic</a>
+                    class="mx-3 bg-blue-300 px-3 py-1 rounded-md text-white font-bold shadow-md"> Basic</a>
             </li>
             <li>
                 <a href="{% url 'dashbord-type' 'orders' %}"
-                    class="mx-3 bg-blue-300 px-3 py-1 rounded-full text-white font-bold shadow-md"> Orders</a>
+                    class="mx-3 bg-blue-300 px-3 py-1 text-white rounded-md font-bold shadow-md"> Orders</a>
             </li>
             <li>
                 <a href="{% url 'dashbord-type' 'address' %}"
-                    class="mx-3 bg-blue-300 px-3 py-1 rounded-full text-white font-bold shadow-md"> address</a>
+                    class="mx-3 bg-blue-300 px-3 py-1 text-white rounded-md font-bold shadow-md"> address</a>
             </li>
         </div>
     </div>
 
     {% if detail_type == 'orders' %}
 
-    <div class="bg-white p-5 rounded-md shadow-lg">
+    <div class="bg-white rounded-md shadow-lg p-2">
         <div class="">
             <div class="max-w-xl">
                 <h1 id="your-orders-heading" class="text-3xl font-extrabold tracking-tight text-gray-900">Your Orders
@@ -54,7 +53,7 @@
     <div class=" shadow-md border-l-8 font-bold  border-indigo-500 border text-blue-900 py-2 px-3 rounded-lg ">
         <!-- <i class="bi bi-trash float-right align-center mt-2" id="{{address.id}}"
             onclick="deleteAddress('{{address.id}}')"></i> -->
-            <a href="{% url 'address' %}"><i class="bi bi-trash float-right align-center mt-2" ></i></a>
+            <a href="{% url 'address' %}"><i class="bi bi-pencil-fill float-right align-center mt-2 hover:bg-gray-300 rounded px-1"></i></a>
         <address>{{address.get_full_address}} </address>
     </div>
     {% endfor %}
@@ -116,8 +115,6 @@
     </div>
 </div> -->
 
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" defer></script>
 <script>
     function toggleModal() {
         document.getElementById('modal').classList.toggle('hidden')

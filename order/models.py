@@ -5,8 +5,12 @@ import random
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
+from datetime import datetime, timedelta
 
 
+class OrderManager(models.Manager):
+    def get_queryset(self):
+        return super(OrderManager, self).get_queryset().filter(order_status='DELIVERD')
 
 class OrderModel(models.Model):
     STATUS = (
@@ -14,6 +18,12 @@ class OrderModel(models.Model):
         ('CONFIRM' , 'CONFIRM'),
         ('CANCEL', 'CANCEL'),
         ('FAILD', 'FAILD'),
+    )
+
+    DELIVERY_STATUS = (
+        ('PENDING', 'PENDING'),
+        ('DELIVERD', 'DELIVERD'),
+        ('CANCEL', 'CANCEL')
     )
 
     METHODS = (
@@ -44,7 +54,11 @@ class OrderModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     time_slot = models.CharField(max_length=15, null=True, choices=TIMESLOT)
     payment_type = models.CharField(max_length=20, null=True)
+    order_status = models.CharField(max_length=10, choices=DELIVERY_STATUS, default='PENDING', null=True, blank=True)
 
+
+    objects = models.Manager()
+    delivered = OrderManager()
 
     def save(self, *args, **kwargs):
         if not self.order_id :
@@ -52,15 +66,17 @@ class OrderModel(models.Model):
         super().save(*args, **kwargs)
 
     def generate_id(self) -> str:
-        code = random.randint(298556, 6897674)
-        code2 = random.randint(1345, 4564)
+        code = random.randint(298, 6897)
+        code2 = random.randint(134, 4564)
         return f'FOOD{code}{code2}'
 
     def get_order_item(self):
-        item = tiffines.Items.objects.get(cart=self.cart.cart_id)
+        item = tiffines.Items.objects.filter(cart=self.cart.cart_id).first()
         return item
 
-    
+    def get_user_detail(self):
+        return UserDetail.objects.get(user = self.user)
+
 class UserDetail(models.Model):
     GENDER = (
         ('MALE', 'MALE'),
