@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'tiffine_site',
     'cart',
-    'order',
+    'order.apps.OrderConfig',
     'payment',
     'checkout',
     'allauth',
@@ -158,7 +158,8 @@ TIME_ZONE = 'Asia/Kolkata'
 
 STATIC_URL = 'static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+# STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -203,3 +204,6 @@ LOGIN_REDIRECT_URL = 'menu'
 CORS_ALLOW_ALL_ORIGIN = True
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 CSRF_FAILURE_VIEW = 'tiffine_site.csrf_falid.csrf_failure'
+
+TWILIO_ACCOUNT_SID = 'AC3b221dd5cc6c8c46803bc9700eabd49d'
+TWILIO_AUTH_TOKEN = '29b2e9516a6c358d495d7bd1f86d99ff'

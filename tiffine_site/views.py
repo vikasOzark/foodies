@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import JsonResponse
 from django.views import View
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -9,22 +9,10 @@ from .models import MainDishModel, AddToFevorate, AddressModel, CommentAndRating
 from django.db.models import Q
 from django.core import serializers
 from .forms import AddressForm
-from django.views.decorators.csrf import csrf_exempt
 import razorpay
 from django.conf import settings
-from .serializers import AddressSerializers
-from django.forms.models import model_to_dict
-import datetime
 from django.db.models import Q
 
-# from django.shortcuts import render_to_response
-from django.template import RequestContext
-
-
-# Create your views here.
-
-# RAZOR_KEY_ID = 'rzp_test_HwKecOzHzISyXr'
-# RAZOR_KEY_SECRET = 'bDcjVc789fO9Prz8kCDgm2yP'
 
 
 class IndexView(View):
@@ -532,7 +520,7 @@ def handler404(request, exception):
 
 def handler500(request):
     context = {}
-    response = render(request, ".500.html", context=context)
+    response = render(request, "500.html", context=context)
     response.status_code = 500
     return response
 

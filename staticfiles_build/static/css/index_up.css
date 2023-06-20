@@ -1,0 +1,43 @@
+/* .text-white{
+    color:rgb(0, 0, 0)
+} */
+
+
+
+
+
+/* center a div with flex */
+
+
+.bg-set-1 {
+
+  background:transparent;
+  box-shadow: 5px 5px 16px 10px rgba(130, 124, 110, .25);
+  border-radius: 39% 28% 64% 20% / 28% 16% 57% 66%;
+}
+.bg-set-1 img{
+  object-fit: scale-down;
+}
+
+
+.order-btn {
+  padding: 0.8em;
+  font-weight: 800;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.text-box {
+  color: aliceblue;
+}
+
+.text-shadow {
+  text-shadow: 5px 5px 5px black;
+}
+
+
+.deli-text {
+  color: #000000;
+  right:3rem;
+  font-size: 3em
+}
